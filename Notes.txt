@@ -1,0 +1,114 @@
+Based on the NTU data and HRI scenarios, I'm simplifying to 6 classes instead of 8. 
+The reason: NTU has no clean "walking_toward" vs "walking_away" single-person action — that direction information will come from the z-velocity feature we pass to the fusion engine, not from the classifier label itself. 
+Six clean, learnable classes:
+0: sitting
+1: standing
+2: walking
+3: running
+4: stepping_back
+5: slumped
+
+Results:
+
+1st run: 
+
+Best val accuracy : 92.484%
+Loading best checkpoint for final report...
+
+Per-class report (val set):
+               precision    recall  f1-score   support
+
+      sitting      0.957     0.942     0.949      5990
+     standing      0.922     0.910     0.916      2731
+      walking      0.912     0.940     0.926      1904
+      running      0.906     0.916     0.911       909
+stepping_back      0.852     0.883     0.867      1664
+      slumped      0.919     0.920     0.919      2142
+
+     accuracy                          0.925     15340
+    macro avg      0.911     0.918     0.915     15340
+ weighted avg      0.925     0.925     0.925     15340
+
+Confusion matrix (rows=true, cols=predicted):
+                  sitting  standing   walking   running  stepping   slumped
+        sitting      5641       150        42        25        73        59
+       standing       158      2484        26         2        18        43
+        walking        12         4      1789        13        67        19
+        running         6         2        14       833        50         4
+  stepping_back        27        12        71        35      1470        49
+        slumped        52        41        20        11        48      1970
+
+2nd run:
+
+Best val accuracy : 93.950%
+Loading best checkpoint for final report...
+
+Per-class report (val set):
+               precision    recall  f1-score   support
+
+      sitting      0.959     0.958     0.958      5990
+     standing      0.944     0.927     0.936      2731
+      walking      0.926     0.946     0.936      1904
+      running      0.928     0.924     0.926       909
+stepping_back      0.884     0.898     0.891      1664
+      slumped      0.941     0.937     0.939      2142
+
+     accuracy                          0.940     15340
+    macro avg      0.930     0.932     0.931     15340
+ weighted avg      0.940     0.940     0.940     15340
+
+Confusion matrix (rows=true, cols=predicted):
+                  sitting  standing   walking   running  stepping   slumped
+        sitting      5737       104        44        15        45        45
+       standing       136      2532        19         0        16        28
+        walking        15        12      1802        18        53         4
+        running         7         2        10       840        45         5
+  stepping_back        33        11        54        27      1495        44
+        slumped        56        21        16         5        38      2006
+
+Hyperparameter tunning:
+Best parameters   :
+  hidden_size    : 256
+  num_layers     : 3
+  dropout        : 0.35000000000000003
+  lr             : 0.0022097021477741094
+  weight_decay   : 0.0043583865743590305
+  batch_size     : 128
+
+Saved to: /home/hri_multimodal/Documents/hri_motion/hri_motion_model/src/../logs/best_hparams.json
+
+Top 5 trials:
+Rank   Val Acc  hidden  layers  dropout        lr        wd    bs
+─────────────────────────────────────────────────────────────────
+   1  94.8175%     256       3     0.35   0.00221   0.00436   128
+   2  94.8175%     256       3     0.30   0.00228   0.00191   128
+   3  94.7784%     256       3     0.35   0.00171   0.00199   128
+   4  94.7066%     256       3     0.30   0.00215   0.00190   128
+   5  94.5372%     256       3     0.40   0.00203   0.00105   128
+
+150 epochs after Hyperparameter tunning:
+Best val accuracy : 95.926%
+Loading best checkpoint for final report...
+
+Per-class report (val set):
+               precision    recall  f1-score   support
+
+      sitting      0.976     0.972     0.974      5990
+     standing      0.967     0.955     0.961      2731
+      walking      0.950     0.962     0.956      1904
+      running      0.937     0.952     0.944       909
+stepping_back      0.922     0.931     0.927      1664
+      slumped      0.949     0.951     0.950      2142
+
+     accuracy                          0.959     15340
+    macro avg      0.950     0.954     0.952     15340
+ weighted avg      0.959     0.959     0.959     15340
+
+Confusion matrix (rows=true, cols=predicted):
+                  sitting  standing   walking   running  stepping   slumped
+        sitting      5824        48        36        13        38        31
+       standing        68      2607        16         1        13        26
+        walking        16         6      1832        11        27        12
+        running         8         2         8       865        19         7
+  stepping_back        22         5        28        26      1550        33
+        slumped        27        28         9         7        34      2037
