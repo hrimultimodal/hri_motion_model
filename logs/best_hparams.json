@@ -1,0 +1,11 @@
+{
+  "val_acc_in_tuning": 0.9481747066492829,
+  "epochs": 150,
+  "patience": 20,
+  "hidden_size": 256,
+  "num_layers": 3,
+  "dropout": 0.35000000000000003,
+  "lr": 0.0022097021477741094,
+  "weight_decay": 0.0043583865743590305,
+  "batch_size": 128
+}

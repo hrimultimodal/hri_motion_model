@@ -75,11 +75,7 @@ ENV/
 ._*
 
 # Logs and databases
-*.log
-logs/
-*.sqlite3
-*.db
-*.sqlite
+
 
 # Model checkpoints and weights
 
